@@ -4,6 +4,7 @@ main {
   flex-direction: column;
   align-items: center;
   margin: auto;
+  text-align: center;
 }
 
 #guess {
@@ -12,4 +13,12 @@ main {
 
 #reset {
   margin: 20px;
+}
+
+.hidden {
+  display: none;
+}
+
+.error-msg {
+  color: #e74c3c;
 }

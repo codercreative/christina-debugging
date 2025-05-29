@@ -27,18 +27,17 @@ function getRandomNumber(min, max) {
 function checkGuess() {
   // Get value from guess input element
   const guess = parseInt(guessInput.value, 10);
-  attempts = attempts + 1;
 
   hideAllMessages();
 
   if (guess === targetNumber) {
-    numberOfGuessesMessage.style.display = "";
+    numberOfGuessesMessage.classList.add("hidden");
     //FIXED: Make sure that it says guess (instead of guesses) if 1 attempt has been made
     numberOfGuessesMessage.innerHTML = `You made ${attempts} ${
       attempts === 1 ? "guess" : "guesses"
     }`;
 
-    correctMessage.style.display = "";
+    correctMessage.classList.remove("hidden");
 
     submitButton.disabled = true;
     guessInput.disabled = true;
@@ -52,17 +51,19 @@ function checkGuess() {
     errorMsg.classList.add("hidden");
   }
 
+  attempts++;
+
   if (guess !== targetNumber) {
     if (guess < targetNumber) {
-      tooLowMessage.style.display = "";
+      tooLowMessage.classList.remove("hidden");
     } else {
       //FIXED BUG: Make sure that the correct message is displayed if the number guessed is too high (shouldn't display tooLowMessage)
-      tooHighMessage.style.display = "";
+      tooHighMessage.classList.remove("hidden");
     }
 
     const remainingAttempts = maxNumberOfAttempts - attempts;
 
-    numberOfGuessesMessage.style.display = "";
+    numberOfGuessesMessage.classList.remove("hidden");
     //FIXED: Make sure that if there is one remaining attempt it states guess (instead of guesses)
     numberOfGuessesMessage.innerHTML = `You guessed ${guess}. <br> ${remainingAttempts} ${
       remainingAttempts === 1 ? "guess" : "guesses"
@@ -75,13 +76,13 @@ function checkGuess() {
     guessInput.disabled = true;
 
     //FIXED BUG: Make sure that too low and too high messages do not appear. Also, added maxGuesses message for better UX.
-    tooLowMessage.style.display = "none";
-    tooHighMessage.style.display = "none";
-    maxGuessesMessage.style.display = "";
+    tooLowMessage.classList.add("hidden");
+    tooHighMessage.classList.add("hidden");
+    maxGuessesMessage.classList.remove("hidden");
   }
 
   guessInput.value = "";
-  resetButton.style.display = "";
+  resetButton.classList.remove("hidden");
 }
 
 function hideAllMessages() {
@@ -91,7 +92,7 @@ function hideAllMessages() {
     elementIndex <= messages.length - 1;
     elementIndex++
   ) {
-    messages[elementIndex].style.display = "none";
+    messages[elementIndex].classList.add("hidden");
   }
 }
 
@@ -114,7 +115,7 @@ function setup() {
   guessInput.disabled = false;
 
   hideAllMessages();
-  resetButton.style.display = "none";
+  resetButton.classList.add("hidden");
 }
 
 submitButton.addEventListener("click", checkGuess);
